@@ -7,6 +7,3 @@ class Part(db.Model):
     name = db.Column(db.String(80), nullable=False)
     messages = db.relationship('Message', backref='part')
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
-
-    def __repr__(self):
-        return f'{self.name} belong to board {self.board_id}.'
