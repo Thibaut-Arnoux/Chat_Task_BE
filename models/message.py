@@ -1,5 +1,5 @@
 from datetime import datetime
-from db import db
+from db import db, ma
 
 
 class Message(db.Model):
@@ -10,3 +10,8 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
     part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
+
+
+class MessageSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Message
