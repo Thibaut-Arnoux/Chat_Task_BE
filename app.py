@@ -11,6 +11,7 @@ from datetime import datetime
 
 
 socketio = SocketIO()
+print("SocketIO")
 
 def create_app():
     app = Flask(__name__)
