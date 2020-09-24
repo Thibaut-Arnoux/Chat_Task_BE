@@ -1,11 +1,16 @@
-from flask import Flask
-from flask_socketio import SocketIO
+from flask import Flask, json
+from flask_socketio import SocketIO, send
 from flask_restful import Api
-from db import init_db
+from db import init_db, db
 from routes.board import BoardAPI, BoardIdApi
 from routes.part import PartAPI, PartIdApi
 from models import *
+from models.message import Message
+from datetime import datetime
 
+
+
+socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +18,7 @@ def create_app():
 
     with app.app_context():
         init_db(app)
+        socketio.init_app(app, cors_allowed_origins='*')
     api = Api(app)
 
     # Board endpoints
@@ -26,6 +32,28 @@ def create_app():
     return app
 
 
+
+
+
+@socketio.on('my_event')
+def handle_my_custom_event(msg):
+    print(f"{type(msg)} : {msg}")
+    msg['date'] = datetime.utcnow()
+    print(msg['date'])
+    db.session.add(Message(**msg))
+    db.session.commit()
+    socketio.emit('my_event',  json.dumps({'content' : msg['content'], 'date' : msg['date']}), broadcast=True)
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app = create_app()
-    app.run()
+    socketio.run(app)
+
+
+
