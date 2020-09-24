@@ -15,3 +15,4 @@ class Message(db.Model):
 class MessageSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Message
+        include_fk = True
