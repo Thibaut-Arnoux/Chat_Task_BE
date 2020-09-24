@@ -3,6 +3,7 @@ from flask_socketio import SocketIO
 from flask_restful import Api
 from db import init_db
 from routes.board import BoardAPI, BoardIdApi
+from routes.part import PartAPI, PartIdApi
 from models import *
 
 
@@ -14,9 +15,14 @@ def create_app():
         init_db(app)
     api = Api(app)
 
-    # Board endpoint
+    # Board endpoints
     api.add_resource(BoardAPI, '/api/board', endpoint='board')
     api.add_resource(BoardIdApi, '/api/board/<int:id>', endpoint='board_id')
+
+    # Part endpoints
+    api.add_resource(PartAPI, '/api/part', endpoint='part')
+    api.add_resource(PartIdApi, '/api/part/<int:id>', endpoint='part_id')
+
     return app
 
 
