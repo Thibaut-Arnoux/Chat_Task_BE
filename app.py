@@ -4,6 +4,7 @@ from flask_restful import Api
 from db import init_db
 from routes.board import BoardAPI, BoardIdApi
 from routes.part import PartAPI, PartIdApi
+from routes.message import MessageAPI, MessageIdApi
 from models import *
 
 
@@ -23,6 +24,9 @@ def create_app():
     api.add_resource(PartAPI, '/api/part', endpoint='part')
     api.add_resource(PartIdApi, '/api/part/<int:id>', endpoint='part_id')
 
+    # Message endpoints
+    api.add_resource(MessageAPI, '/api/message', endpoint='message')
+    api.add_resource(MessageIdApi, '/api/message/<int:id>', endpoint='message_id')
     return app
 
 
