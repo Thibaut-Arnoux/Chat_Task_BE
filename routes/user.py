@@ -11,7 +11,6 @@ class LoginApi(Resource):
     def post(self):
         try:
             body = request.get_json()
-            print(body, body.get('name'))
             user = User.query.filter_by(name=body.get('name')).first()
             expires = datetime.timedelta(days=1)
             access_token = create_access_token(identity=str(user.id), expires_delta=expires)
