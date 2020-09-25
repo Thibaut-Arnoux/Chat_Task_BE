@@ -1,4 +1,5 @@
 from flask import request, Response, json
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 from models.board import Board, BoardSchema
 from db import db
@@ -6,6 +7,7 @@ from db import db
 
 class BoardAPI(Resource):
 
+    @jwt_required
     def get(self):
         try:
             boards = Board.query.all()
@@ -15,6 +17,7 @@ class BoardAPI(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def post(self):
         try:
             body = request.get_json()
@@ -28,6 +31,7 @@ class BoardAPI(Resource):
 
 class BoardIdApi(Resource):
 
+    @jwt_required
     def get(self, id):
         try:
             board = Board.query.get(id)
@@ -37,6 +41,7 @@ class BoardIdApi(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def put(self, id):
         try:
             body = request.get_json()
@@ -50,6 +55,7 @@ class BoardIdApi(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def delete(self, id):
         try:
             board = Board.query.get(id)

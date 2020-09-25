@@ -1,4 +1,5 @@
 from flask import request, Response, json
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 from models.part import Part, PartSchema
 from db import db
@@ -6,6 +7,7 @@ from db import db
 
 class PartAPI(Resource):
 
+    @jwt_required
     def get(self):
         try:
             parts = Part.query.all()
@@ -15,6 +17,7 @@ class PartAPI(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def post(self):
         try:
             body = request.get_json()
@@ -28,6 +31,7 @@ class PartAPI(Resource):
 
 class PartIdApi(Resource):
 
+    @jwt_required
     def get(self, id):
         try:
             part = Part.query.get(id)
@@ -37,6 +41,7 @@ class PartIdApi(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def put(self, id):
         try:
             body = request.get_json()
@@ -50,6 +55,7 @@ class PartIdApi(Resource):
         except Exception:
             raise
 
+    @jwt_required
     def delete(self, id):
         try:
             part = Part.query.get(id)
