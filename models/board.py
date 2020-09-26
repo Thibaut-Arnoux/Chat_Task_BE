@@ -1,5 +1,4 @@
-from db import db, ma
-# from models.part import PartSchema
+from db import db
 
 
 class Board(db.Model):
@@ -9,11 +8,3 @@ class Board(db.Model):
     nb_part = db.Column(db.Integer, nullable=False)
     parts = db.relationship('Part', cascade="all, delete", backref='board')
     messages = db.relationship('Message', cascade="all, delete", backref='board')
-
-
-class BoardSchema(ma.SQLAlchemyAutoSchema):
-    # If we wanna add relationship in serialize representation
-    # parts = ma.Nested(PartSchema, many=True)
-
-    class Meta:
-        model = Board
