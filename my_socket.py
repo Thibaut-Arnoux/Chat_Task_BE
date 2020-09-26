@@ -18,9 +18,8 @@ def handle_my_custom_event(msg):
     info_token = decode_token(msg['access_token'])
     id = info_token['identity']
 
-    msg.pop('access_token')
-    msg['user_id'] = id
-    msg['date'] = datetime.utcnow()
-    db.session.add(Message(**msg))
+    msg_db = Message(content=msg['content'], user_id=id, board_id=msg['board_id'])
+    msg_db.set_part_id()
+    db.session.add(msg_db)
     db.session.commit()
-    socket.emit('my_event',  json.dumps({'content': msg['content'], 'date': msg['date']}), broadcast=True)
+    socket.emit('my_event',  json.dumps({'content': msg_db.content, 'date': msg_db.date}), broadcast=True)

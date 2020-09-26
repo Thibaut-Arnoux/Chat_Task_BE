@@ -1,5 +1,6 @@
 from datetime import datetime
-from db import db, ma
+from db import db
+from models.board import Board
 
 
 class Message(db.Model):
@@ -11,8 +12,13 @@ class Message(db.Model):
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
     part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
 
+    def set_part_id(self):
+        board = Board.query.get(self.board_id)
+        parts = board.parts
+        tag_content = self.content.split()[0]
 
-class MessageSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Message
-        include_fk = True
+        for part in parts:
+            if tag_content == part.tag:
+                self.content = ' '.join(self.content.split()[1:])
+                self.part_id = part.id
+                break

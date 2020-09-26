@@ -1,13 +1,13 @@
 from flask import Flask, json
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
+from models import *
 from db import init_db
 from my_socket import init_socket, socket
 from routes.board import BoardAPI, BoardIdApi
 from routes.part import PartAPI, PartIdApi
 from routes.message import MessageAPI, MessageIdApi
 from routes.user import UserApi, LoginApi
-from models import *
 
 
 def create_app():
@@ -36,6 +36,7 @@ def create_app():
     # User endpoints
     api.add_resource(UserApi, '/api/auth/signup', '/api/user', endpoint='user')
     api.add_resource(LoginApi, '/api/auth/login', endpoint='login')
+
     return app
 
 
