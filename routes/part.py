@@ -1,7 +1,8 @@
 from flask import request, Response, json
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
-from models.part import Part, PartSchema
+from models.part import Part
+from schemas.part import PartSchema
 from db import db
 
 

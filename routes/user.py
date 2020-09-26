@@ -1,7 +1,8 @@
 from flask import request, Response, json
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from flask_restful import Resource
-from models.user import User, UserSchema
+from models.user import User
+from schemas.user import UserSchema
 from db import db
 import datetime
 
@@ -22,7 +23,6 @@ class LoginApi(Resource):
 
 class UserApi(Resource):
 
-    @jwt_required
     def post(self):
         try:
             body = request.get_json()

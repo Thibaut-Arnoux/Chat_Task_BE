@@ -1,7 +1,8 @@
 from flask import request, Response, json
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
-from models.board import Board, BoardSchema
+from models.board import Board
+from schemas.board import BoardSchema
 from db import db
 
 

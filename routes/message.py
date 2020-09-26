@@ -1,7 +1,8 @@
 from flask import request, Response, json
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
-from models.message import Message, MessageSchema
+from models.message import Message
+from schemas.message import MessageSchema
 from db import db
 
 
