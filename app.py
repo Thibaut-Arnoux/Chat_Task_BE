@@ -1,6 +1,7 @@
 from flask import Flask, json
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
+from flask_cors import CORS
 from models import *
 from db import init_db
 from my_socket import init_socket, socket
@@ -20,6 +21,7 @@ def create_app():
 
     jwt = JWTManager(app)
     api = Api(app)
+    cors = CORS(app)
 
     # Board endpoints
     api.add_resource(BoardAPI, '/api/board', endpoint='board')
