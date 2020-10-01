@@ -35,7 +35,7 @@ class BoardIdApi(Resource):
     @jwt_required
     def get(self, id):
         try:
-            board = Board.query.get(id)
+            board = Board.query.get_or_404(id)
             board_schema = BoardSchema()
             output = board_schema.dump(board)
             return Response(json.dumps(output), mimetype="application/json", status=200)
@@ -63,5 +63,32 @@ class BoardIdApi(Resource):
             db.session.delete(board)
             db.session.commit()
             return Response('', status=204)
+        except Exception:
+            raise
+
+
+class BoardIdPartsApi(Resource):
+    @jwt_required
+    def get(self, id):
+        try:
+            board = Board.query.get_or_404(id)
+            board_schema = BoardSchema()
+            output = board_schema.dump(board)
+            output['parts'] = []
+            for part in board.parts:
+                msgs = []
+
+                # Add msg of part
+                for msg in part.messages:
+                    msgs.append(msg.content)
+
+                # Create output with Part and Msg informations
+                output['parts'].append({
+                    'id': part.id,
+                    'name': part.name,
+                    'tag': part.tag,
+                    'msgs': msgs
+                })
+            return Response(json.dumps(output), mimetype="application/json", status=200)
         except Exception:
             raise
