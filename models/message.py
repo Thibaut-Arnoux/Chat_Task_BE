@@ -15,10 +15,10 @@ class Message(db.Model):
     def set_part_id(self):
         board = Board.query.get(self.board_id)
         parts = board.parts
-        tag_content = self.content.split()[0]
+        tag = self.content.split()[0]
 
         for part in parts:
-            if tag_content == part.tag:
+            if tag == part.tag:
                 self.content = ' '.join(self.content.split()[1:])
                 self.part_id = part.id
-                break
+                return tag

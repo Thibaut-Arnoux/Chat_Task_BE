@@ -19,7 +19,7 @@ def handle_my_custom_event(msg):
     id = info_token['identity']
 
     msg_db = Message(content=msg['content'], user_id=id, board_id=msg['board_id'])
-    msg_db.set_part_id()
+    tag = msg_db.set_part_id()
     db.session.add(msg_db)
     db.session.commit()
-    socket.emit('my_event',  json.dumps({'content': msg_db.content, 'date': msg_db.date}), broadcast=True)
+    socket.emit('my_event',  json.dumps({'content': msg_db.content, 'date': msg_db.date, 'tag': tag}), broadcast=True)
