@@ -23,12 +23,24 @@ CREATE USER 'chattask'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON chat_task.* TO 'chattask'@'localhost';
 ```
 
-## Set environment
+## Set env
+
+```
+pip install -r requirements.txt
+
+# if problem with mysqlclient install :
+
+sudo apt-get install libmysqlclient-dev
+```
+
+## Start App
 
 Linux
 ```
 export FLASK_APP=app.py
 export ENV_FILE_LOCATION=./.env
+
+flask run
 ```
 
 Windows

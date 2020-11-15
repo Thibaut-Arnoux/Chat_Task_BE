@@ -2,3 +2,6 @@
 .env
 __pycache__/
 venv/
+*.pyc
+.directory
+venvServ/
